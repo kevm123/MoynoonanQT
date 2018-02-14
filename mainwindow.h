@@ -54,6 +54,7 @@ private:
     void createItems();
     void displayItems();
     void teleport();
+    void fillItems();
 
 };
 

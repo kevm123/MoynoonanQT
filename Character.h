@@ -23,6 +23,8 @@ public:
     Character(string description);
     string shortDescription();
     string longDescription();
+    int numberOfItems();
+    string getItemI(int num);
 
 };
 

@@ -29,6 +29,7 @@ public:
     int isItemInRoom(string inString);
     void removeItemFromRoom(int location);
     Item takeItem(int location);
+    string getItemI(int num);
 };
 
 #endif

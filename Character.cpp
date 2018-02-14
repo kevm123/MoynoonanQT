@@ -20,5 +20,13 @@ string Character::longDescription()
   return ret;
 }
 
+int Character::numberOfItems() {
+    return itemsInCharacter.size();
+}
+
+string Character::getItemI(int num)
+{
+    return itemsInCharacter[num].getShortDescription();
+}
 
 

@@ -95,3 +95,7 @@ Item Room::takeItem(int location)
     return takingItem;
 }
 
+string Room::getItemI(int num)
+{
+    return itemsInRoom[num].getShortDescription();
+}

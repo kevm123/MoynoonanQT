@@ -57,6 +57,7 @@ void MainWindow::createRooms()  {
 void MainWindow::play() {
 
     character = new Character("This is a new Character");
+    fillItems();
     printWelcome();
 
    /* // Enter the main command loop.  Here we repeatedly read commands and
@@ -123,6 +124,7 @@ bool MainWindow::processCommand(Command command) {
         goRoom(command);
         string RoomInfo = currentRoom->longDescription();
         ui->Label2->setText(QString::fromStdString(RoomInfo));
+        fillItems();
     }
 
     else if (commandWord.compare("take") == 0)
@@ -142,6 +144,17 @@ bool MainWindow::processCommand(Command command) {
             cout << endl;
             cout << currentRoom->longDescription() << endl;
             character->addItem(currentRoom->takeItem(location));
+
+            //Update Obtained Items DropDown
+            ui->ObtainedItems->clear();
+            int numOfItems = character->numberOfItems();
+            for(int i = 0; i < numOfItems; i++)
+                {
+                    ui->ObtainedItems->addItem(QString::fromStdString(character->getItemI(i)));
+                }
+
+            //Update Items In Room DropDown
+            fillItems();
         }
     }
 
@@ -247,6 +260,19 @@ void MainWindow::on_West_clicked()
 
 void MainWindow::on_TakeButton_clicked()
 {
-    Command* command = parser.getCommand("take x");
+    string ItemToTake = (ui->ItemDropdown->currentText()).toStdString();
+    string comm = "take "+ItemToTake;
+    Command* command = parser.getCommand(comm);
     processCommand(*command);
+}
+
+//Update Items In Room DropDown
+void MainWindow::fillItems()
+{
+    ui->ItemDropdown->clear();
+    int numOfItems = currentRoom->numberOfItems();
+    for(int i = 0; i < numOfItems; i++)
+        {
+            ui->ItemDropdown->addItem(QString::fromStdString(currentRoom->getItemI(i)));
+        }
 }
