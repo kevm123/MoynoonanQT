@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AreaMap</class>
+ <widget class="QWidget" name="AreaMap">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Area Map</string>
+  </property>
+  <widget class="QLabel" name="mapView">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>10</y>
+     <width>311</width>
+     <height>271</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="mapimg1.qrc">:/mapImgs/images/roomMapTemplatePosA.png</pixmap>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="mapimg1.qrc"/>
+ </resources>
+ <connections/>
+</ui>
