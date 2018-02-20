@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "Command.h"
+#include "areamap.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -8,6 +9,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
      createRooms();
+    // AreaMap aMap;
+     aMap.show();
      play();
 }
 
@@ -209,6 +212,7 @@ void MainWindow::goRoom(Command command) {
         cout << "underdefined input"<< endl;
     else {
         currentRoom = nextRoom;
+        aMap.setMapLocation(currentRoom->shortDescription());
         cout << currentRoom->longDescription() << endl;
     }
 }
@@ -265,6 +269,10 @@ void MainWindow::on_TakeButton_clicked()
     Command* command = parser.getCommand(comm);
     processCommand(*command);
 }
+void MainWindow::on_teleportButton_clicked()
+{
+ teleport();
+}
 
 //Update Items In Room DropDown
 void MainWindow::fillItems()
@@ -276,3 +284,4 @@ void MainWindow::fillItems()
             ui->ItemDropdown->addItem(QString::fromStdString(currentRoom->getItemI(i)));
         }
 }
+

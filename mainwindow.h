@@ -9,6 +9,7 @@
 #include "Parser.h"
 #include "Room.h"
 #include "item.h"
+#include "areamap.h"
 #include <iostream>
 #include <string>
 using namespace std;
@@ -27,6 +28,9 @@ public:
 
     void play();
     string go(string direction);
+    Room *currentRoom;
+    string getCurrentRoom();
+    AreaMap aMap;
 
 
 private slots:
@@ -40,11 +44,13 @@ private slots:
 
     void on_TakeButton_clicked();
 
+    void on_teleportButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 
     Parser parser;
-    Room *currentRoom;
+
     Character *character;
     void createRooms();
     void printWelcome();
