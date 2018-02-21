@@ -13,6 +13,7 @@ class Character {
 private:
     string description;
     vector < Item > itemsInCharacter;
+    string facing;
 public:
     void addItem(Item item);
 
@@ -25,6 +26,8 @@ public:
     string longDescription();
     int numberOfItems();
     string getItemI(int num);
+    string getFacing();
+    void setFacing(string direction);
 
 };
 

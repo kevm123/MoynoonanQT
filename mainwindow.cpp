@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "Command.h"
+#include "areamap.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -8,6 +9,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
      createRooms();
+    // AreaMap aMap;
+     aMap.show();
+     aMap.setMapLocation(currentRoom->shortDescription());
      play();
 }
 
@@ -22,11 +26,11 @@ void MainWindow::createRooms()  {
     Room *a, *b, *c, *d, *e, *f, *g, *h, *i, *j;
 
     a = new Room("a");
-        a->addItem(new Item("x", 1, 11));
-        a->addItem(new Item("y", 2, 22));
+        a->addItem(new Item("x", 1, 11, "north", true));
+        a->addItem(new Item("y", 2, 22, "south", true));
     b = new Room("b");
-        b->addItem(new Item("xx", 3, 33));
-        b->addItem(new Item("yy", 4, 44));
+        b->addItem(new Item("xx", 3, 33, "east", true));
+        b->addItem(new Item("yy", 4, 44, "west", true));
     c = new Room("c");
     d = new Room("d");
     e = new Room("e");
@@ -35,6 +39,8 @@ void MainWindow::createRooms()  {
     h = new Room("h");
     i = new Room("i");
     j = new Room("j");
+        j->addItem(new Item("painting", 1, 11, "north", false));
+        j->addItem(new Item("key", 2, 22, "south", true));
 
 //             (N, E, S, W)
     a->setExits(f, b, d, c);
@@ -48,7 +54,7 @@ void MainWindow::createRooms()  {
     i->setExits(NULL, d, NULL, j);
     j->setExits(NULL,i,NULL,NULL);
 
-        currentRoom = a;
+        currentRoom = j;
 }
 
 /**
@@ -82,7 +88,7 @@ void MainWindow::play() {
 void MainWindow::printWelcome() {
 
         ui->Label1->setText("Welcome to a new Game\nThe button below will guid you through\nPress Continue");
-        string RoomInfo = currentRoom->longDescription();
+        string RoomInfo = currentRoom->longDescription(character->getFacing());
         ui->Label2->setText(QString::fromStdString(RoomInfo));
 
     /*cout << "start"<< endl;
@@ -122,7 +128,7 @@ bool MainWindow::processCommand(Command command) {
     else if (commandWord.compare("go") == 0)
     {
         goRoom(command);
-        string RoomInfo = currentRoom->longDescription();
+        string RoomInfo = currentRoom->longDescription(character->getFacing());
         ui->Label2->setText(QString::fromStdString(RoomInfo));
         fillItems();
     }
@@ -138,11 +144,13 @@ bool MainWindow::processCommand(Command command) {
         int location = currentRoom->isItemInRoom(command.getSecondWord());
         if (location  < 0 )
             cout << "item is not in room" << endl;
-        else
+        else if((currentRoom->getItem(location)).getObtainable()){
             cout << "item is in room" << endl;
             cout << "index number " << + location << endl;
             cout << endl;
-            cout << currentRoom->longDescription() << endl;
+            cout << currentRoom->longDescription(character->getFacing()) << endl;
+
+            currentRoom->getItem(location).setPlaced("");
             character->addItem(currentRoom->takeItem(location));
 
             //Update Obtained Items DropDown
@@ -156,6 +164,7 @@ bool MainWindow::processCommand(Command command) {
             //Update Items In Room DropDown
             fillItems();
         }
+        }
     }
 
     else if (commandWord.compare("put") == 0)
@@ -163,10 +172,7 @@ bool MainWindow::processCommand(Command command) {
 
     }
 
-    else if(commandWord.compare("teleport")==0)
-    {
-        teleport();
-    }
+
     /*
     {
     if (!command.hasSecondWord()) {
@@ -209,14 +215,11 @@ void MainWindow::goRoom(Command command) {
         cout << "underdefined input"<< endl;
     else {
         currentRoom = nextRoom;
-        cout << currentRoom->longDescription() << endl;
+        aMap.setMapLocation(currentRoom->shortDescription());
+        cout << currentRoom->longDescription(character->getFacing()) << endl;
     }
 }
 
-void MainWindow::teleport(){
-
-    cout << "Tried to teleport" << endl;
-}
 
 string MainWindow::go(string direction) {
     //Make the direction lowercase
@@ -228,7 +231,7 @@ string MainWindow::go(string direction) {
     else
     {
         currentRoom = nextRoom;
-        return currentRoom->longDescription();
+        return currentRoom->longDescription(character->getFacing());
     }
 }
 
@@ -236,25 +239,37 @@ string MainWindow::go(string direction) {
 
 void MainWindow::on_NorthButton_clicked()
 {
-    Command* command = parser.getCommand("go north");
-    processCommand(*command);
+    character->setFacing("north");
+    string RoomInfo = currentRoom->longDescription(character->getFacing());
+    ui->Label2->setText(QString::fromStdString(RoomInfo));
 }
 
 void MainWindow::on_SouthButton_clicked()
 {
-    Command* command = parser.getCommand("go south");
-    processCommand(*command);
+    character->setFacing("south");
+    string RoomInfo = currentRoom->longDescription(character->getFacing());
+    ui->Label2->setText(QString::fromStdString(RoomInfo));
 }
 
 void MainWindow::on_EastButton_clicked()
 {
-    Command* command = parser.getCommand("go east");
-    processCommand(*command);
+    character->setFacing("east");
+    string RoomInfo = currentRoom->longDescription(character->getFacing());
+    ui->Label2->setText(QString::fromStdString(RoomInfo));
 }
 
 void MainWindow::on_West_clicked()
 {
-    Command* command = parser.getCommand("go west");
+    character->setFacing("west");
+    string RoomInfo = currentRoom->longDescription(character->getFacing());
+    ui->Label2->setText(QString::fromStdString(RoomInfo));
+}
+
+
+void MainWindow::on_GoButton_clicked()
+{
+    string direction = character->getFacing();
+    Command* command = parser.getCommand("go "+direction);
     processCommand(*command);
 }
 
@@ -266,6 +281,7 @@ void MainWindow::on_TakeButton_clicked()
     processCommand(*command);
 }
 
+
 //Update Items In Room DropDown
 void MainWindow::fillItems()
 {
@@ -276,3 +292,5 @@ void MainWindow::fillItems()
             ui->ItemDropdown->addItem(QString::fromStdString(currentRoom->getItemI(i)));
         }
 }
+
+

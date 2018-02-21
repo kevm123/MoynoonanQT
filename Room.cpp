@@ -21,8 +21,8 @@ string Room::shortDescription() {
 	return description;
 }
 
-string Room::longDescription() {
-    return "You are now in room " + description + ".\n" + displayItem() + exitString();
+string Room::longDescription(string facing) {
+    return "You are now in room " + description + ".\n" + "You are facing "+ facing + ".\n" + displayItem(facing) + exitString();
 }
 
 string Room::exitString() {
@@ -47,8 +47,8 @@ void Room::addItem(Item *inItem) {
     itemsInRoom.push_back(*inItem);
 }
 
-string Room::displayItem() {
-    string tempString = "items in room = ";
+string Room::displayItem(string facing) {
+    string tempString = "items to the "+facing+" in room = ";
     int sizeItems = (itemsInRoom.size());
     if (itemsInRoom.size() < 1) {
         tempString = "no items in room";
@@ -56,7 +56,8 @@ string Room::displayItem() {
     else if (itemsInRoom.size() > 0) {
        int x = (0);
         for (int n = sizeItems; n > 0; n--) {
-            tempString = tempString + itemsInRoom[x].getShortDescription() + "  " ;
+            if(itemsInRoom[x].getPlaced() == facing)
+                tempString = tempString + itemsInRoom[x].getShortDescription() + "  " ;
             x++;
             }
         }
@@ -86,6 +87,12 @@ int Room::isItemInRoom(string inString)
             }
         }
     return -1;
+}
+
+Item Room::getItem(int location)
+{
+    Item ItemToCheck = itemsInRoom[location];
+    return ItemToCheck;
 }
 
 Item Room::takeItem(int location)

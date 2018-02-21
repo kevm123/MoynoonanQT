@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/mapImgs">
+        <file>images/mapPracticeTemplate.png</file>
+        <file>images/mapPracticeTemplate1.png</file>
+        <file>images/mapPracticeTemplate2.png</file>
+        <file>images/roomMapTemplate.png</file>
+        <file>images/roomMapTemplatePosA.png</file>
+        <file>images/roomMapTemplatePosB.png</file>
+        <file>images/roomMapTemplatePosC.png</file>
+        <file>images/roomMapTemplatePosD.png</file>
+        <file>images/roomMapTemplatePosE.png</file>
+        <file>images/roomMapTemplatePosF.png</file>
+        <file>images/roomMapTemplatePosG.png</file>
+        <file>images/roomMapTemplatePosH.png</file>
+        <file>images/roomMapTemplatePosI.png</file>
+        <file>images/roomMapTemplatePosJ.png</file>
+    </qresource>
+</RCC>

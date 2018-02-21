@@ -167,6 +167,19 @@
      <string>Obtained Items</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="GoButton">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>330</y>
+      <width>121</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Go</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

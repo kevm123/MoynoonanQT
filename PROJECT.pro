@@ -31,7 +31,8 @@ SOURCES += \
     Character.cpp \
     Command.cpp \
     item.cpp \
-    Room.cpp
+    Room.cpp \
+    areamap.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -40,8 +41,13 @@ HEADERS += \
     CommandWords.h \
     item.h \
     Room.h \
-    Parser.h
+    Parser.h \
+    areamap.h
 
 FORMS += \
         mainwindow.ui \
+    areamap.ui
+
+RESOURCES += \
+    mapimg1.qrc
 

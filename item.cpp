@@ -1,9 +1,11 @@
 #include "item.h"
 
-Item::Item (string inDescription, int inWeightGrams, float inValue/**, int weaponCheck*/) {
+Item::Item (string inDescription, int inWeightGrams, float inValue, string inplaced, bool obt/**, int weaponCheck*/) {
 	description = inDescription;
 	setWeight(inWeightGrams);
 	value = inValue;
+    placed = inplaced;
+    obtainable = obt;
 	/**weaponCheck(isWeapon);*/
 }
 
@@ -45,3 +47,18 @@ string Item::getLongDescription()
 	return " item(s), " + description + ".\n";
 }
 
+string Item::getPlaced()
+{
+    return placed;
+}
+
+void Item::setPlaced(string p)
+{
+    placed = p;
+}
+
+bool Item::getObtainable()
+{
+
+    return obtainable;
+}

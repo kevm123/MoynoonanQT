@@ -22,14 +22,15 @@ public:
 	Room(string description);
 	void setExits(Room *north, Room *east, Room *south, Room *west);
 	string shortDescription();
-	string longDescription();
+    string longDescription(string facing);
 	Room* nextRoom(string direction);
     void addItem(Item *inItem);
-    string displayItem();
+    string displayItem(string facing);
     int isItemInRoom(string inString);
     void removeItemFromRoom(int location);
     Item takeItem(int location);
     string getItemI(int num);
+    Item getItem(int location);
 };
 
 #endif

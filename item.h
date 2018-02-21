@@ -13,9 +13,11 @@ private:
 	int weightGrams;
 	float value;
 	bool weaponCheck;
+    string placed;
+    bool obtainable;
 
 public:
-    Item (string description, int inWeight, float inValue);
+    Item (string description, int inWeight, float inValue, string inplaced, bool obtainable);
     Item (string description);
 	string getShortDescription();
     string getLongDescription();
@@ -25,6 +27,9 @@ public:
 	void setValue(float value);
 	int getWeaponCheck();
 	void setWeaponCheck(int weaponCheck);
+    string getPlaced();
+    void setPlaced(string p);
+    bool getObtainable();
 };
 
 #endif /*ITEM_H_*/

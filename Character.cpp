@@ -2,6 +2,7 @@
 
 Character::Character(string description) {
     this->description = description;
+    facing="north";
 }
 void Character::addItem(Item item) {
     itemsInCharacter.push_back(item);
@@ -27,6 +28,16 @@ int Character::numberOfItems() {
 string Character::getItemI(int num)
 {
     return itemsInCharacter[num].getShortDescription();
+}
+
+string Character::getFacing()
+{
+    return facing;
+}
+
+void Character::setFacing(string direction)
+{
+    facing = direction;
 }
 
 
