@@ -15,9 +15,10 @@ private:
 	bool weaponCheck;
     string placed;
     bool obtainable;
+    string InvestigateString;
 
 public:
-    Item (string description, int inWeight, float inValue, string inplaced, bool obtainable);
+    Item (string description, int inWeight, float inValue, string inplaced, bool obtainable, string inString);
     Item (string description);
 	string getShortDescription();
     string getLongDescription();
@@ -30,6 +31,7 @@ public:
     string getPlaced();
     void setPlaced(string p);
     bool getObtainable();
+    string getInvestigateString();
 };
 
 #endif /*ITEM_H_*/

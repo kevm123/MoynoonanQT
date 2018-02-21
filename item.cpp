@@ -1,11 +1,12 @@
 #include "item.h"
 
-Item::Item (string inDescription, int inWeightGrams, float inValue, string inplaced, bool obt/**, int weaponCheck*/) {
+Item::Item (string inDescription, int inWeightGrams, float inValue, string inplaced, bool obt, string inString/**, int weaponCheck*/) {
 	description = inDescription;
 	setWeight(inWeightGrams);
 	value = inValue;
     placed = inplaced;
     obtainable = obt;
+    InvestigateString = inString;
 	/**weaponCheck(isWeapon);*/
 }
 
@@ -61,4 +62,9 @@ bool Item::getObtainable()
 {
 
     return obtainable;
+}
+
+string Item::getInvestigateString()
+{
+    return InvestigateString;
 }

@@ -48,6 +48,8 @@ private slots:
 
     void on_GoButton_clicked();
 
+    void on_InvestigateButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 

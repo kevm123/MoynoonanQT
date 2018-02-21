@@ -26,11 +26,11 @@ void MainWindow::createRooms()  {
     Room *a, *b, *c, *d, *e, *f, *g, *h, *i, *j;
 
     a = new Room("a");
-        a->addItem(new Item("x", 1, 11, "north", true));
-        a->addItem(new Item("y", 2, 22, "south", true));
+        a->addItem(new Item("x", 1, 11, "north", true, "No info"));
+        a->addItem(new Item("y", 2, 22, "south", true, "No info"));
     b = new Room("b");
-        b->addItem(new Item("xx", 3, 33, "east", true));
-        b->addItem(new Item("yy", 4, 44, "west", true));
+        b->addItem(new Item("xx", 3, 33, "east", true, "No info"));
+        b->addItem(new Item("yy", 4, 44, "west", true, "No info"));
     c = new Room("c");
     d = new Room("d");
     e = new Room("e");
@@ -39,8 +39,8 @@ void MainWindow::createRooms()  {
     h = new Room("h");
     i = new Room("i");
     j = new Room("j");
-        j->addItem(new Item("painting", 1, 11, "north", false));
-        j->addItem(new Item("key", 2, 22, "south", true));
+        j->addItem(new Item("painting", 1, 11, "north", false, "Painted in 1964"));
+        j->addItem(new Item("key", 2, 22, "south", true, "Its a key"));
 
 //             (N, E, S, W)
     a->setExits(f, b, d, c);
@@ -167,9 +167,23 @@ bool MainWindow::processCommand(Command command) {
         }
     }
 
-    else if (commandWord.compare("put") == 0)
+    else if (commandWord.compare("Investigate") == 0)
     {
-
+        if (!command.hasSecondWord()) {
+        cout << "incomplete input"<< endl;
+        }
+        else
+         if (command.hasSecondWord()) {
+        int location = currentRoom->isItemInRoom(command.getSecondWord());
+        if (location  < 0 )
+            cout << "item is not in room" << endl;
+        else
+        {
+            Item ItemToInvestigate = currentRoom->getItem(location);
+            string output = ItemToInvestigate.getInvestigateString();
+            cout<<output<<endl;
+         }
+    }
     }
 
 
@@ -281,6 +295,14 @@ void MainWindow::on_TakeButton_clicked()
     processCommand(*command);
 }
 
+void MainWindow::on_InvestigateButton_clicked()
+{
+    string ItemToInvestigate = (ui->ItemDropdown->currentText()).toStdString();
+    string comm = "Investigate "+ItemToInvestigate;
+    Command* command = parser.getCommand(comm);
+    processCommand(*command);
+}
+
 
 //Update Items In Room DropDown
 void MainWindow::fillItems()
@@ -292,5 +314,4 @@ void MainWindow::fillItems()
             ui->ItemDropdown->addItem(QString::fromStdString(currentRoom->getItemI(i)));
         }
 }
-
 
