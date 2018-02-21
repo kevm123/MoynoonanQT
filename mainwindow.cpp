@@ -43,14 +43,14 @@ void MainWindow::createRooms()  {
         j->addItem(new Item("key", 2, 22, "south", true, "Its a key"));
 
 //             (N, E, S, W)
-    a->setExits(f, b, d, c);
-    b->setExits(NULL, NULL, NULL, a);
-    c->setExits(NULL, a, NULL, NULL);
+    a->setExits(NULL, b, d, c);
+    b->setExits(g, NULL, NULL, a);
+    c->setExits(h, a, NULL, NULL);
     d->setExits(a, e, NULL, i);
     e->setExits(NULL, NULL, NULL, d);
-    f->setExits(NULL, g, a, h);
-    g->setExits(NULL, NULL, NULL, f);
-    h->setExits(NULL, f, NULL, NULL);
+    f->setExits(NULL, g, NULL, NULL);
+    g->setExits(NULL, NULL, b, f);
+    h->setExits(NULL, NULL, c, NULL);
     i->setExits(NULL, d, NULL, j);
     j->setExits(NULL,i,NULL,NULL);
 
