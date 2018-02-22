@@ -33,11 +33,9 @@ string Character::getItemI(int num)
 
 Item* Character::getItemByString(string itemName){
     for(int i=0; i<numberOfItems(); i++){
-        if(itemsInCharacter[i].getShortDescription()==itemName)
+        if(itemsInCharacter[i].getShortDescription()==itemName){
             return &itemsInCharacter[i];
-        else
-            return nullptr;
-
+         }
     }
     return nullptr;
 }

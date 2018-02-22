@@ -38,6 +38,7 @@ void MainWindow::createRooms()  {
     g = new Room("g");
     h = new Room("h");
     i = new Room("i");
+         i->addItem(new Item("Oldkey", 2, 22, "east", true, "An old, rusty key", true, 2));
     j = new Room("j");
         j->addItem(new Item("painting", 1, 11, "north", false, "Painted in 1964", false));
         j->addItem(new Item("key", 2, 22, "south", true, "Its a key", true, 1));
