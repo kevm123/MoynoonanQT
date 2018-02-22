@@ -17,6 +17,18 @@ void Room::setExits(Room *north, Room *east, Room *south, Room *west) {
 		exits["west"] = west;
 }
 
+void Room::setLocks(int north, int east, int south, int west) {
+
+        locks["north"] = north;
+
+        locks["east"] = east;
+
+        locks["south"] = south;
+
+        locks["west"] = west;
+}
+
+
 string Room::shortDescription() {
 	return description;
 }
@@ -105,4 +117,15 @@ Item Room::takeItem(int location)
 string Room::getItemI(int num)
 {
     return itemsInRoom[num].getShortDescription();
+}
+bool Room::isLocked(string facing){
+
+    if(locks[facing]!=0){
+        cout<< locks[facing] << facing << endl;
+        return true;
+    }else{
+        cout<< locks[facing] << facing << endl;
+        return false;
+    }
+
 }

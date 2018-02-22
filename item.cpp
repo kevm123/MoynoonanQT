@@ -1,13 +1,23 @@
 #include "item.h"
 
-Item::Item (string inDescription, int inWeightGrams, float inValue, string inplaced, bool obt, string inString/**, int weaponCheck*/) {
-	description = inDescription;
-	setWeight(inWeightGrams);
-	value = inValue;
+Item::Item (string inDescription, int inWeightGrams, float inValue, string inplaced, bool obt, string inString, bool isKey /**, int weaponCheck*/, int inKeyNum) {
+    description = inDescription;
+    setWeight(inWeightGrams);
+    value = inValue;
     placed = inplaced;
     obtainable = obt;
     InvestigateString = inString;
-	/**weaponCheck(isWeapon);*/
+    keyNum = inKeyNum;
+    /**weaponCheck(isWeapon);*/
+}
+Item::Item (string inDescription, int inWeightGrams, float inValue, string inplaced, bool obt, string inString, bool isKey /**, int weaponCheck*/) {
+    description = inDescription;
+    setWeight(inWeightGrams);
+    value = inValue;
+    placed = inplaced;
+    obtainable = obt;
+    InvestigateString = inString;
+    /**weaponCheck(isWeapon);*/
 }
 
 Item::Item(string inDescription) {

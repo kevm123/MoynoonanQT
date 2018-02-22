@@ -26,11 +26,11 @@ void MainWindow::createRooms()  {
     Room *a, *b, *c, *d, *e, *f, *g, *h, *i, *j;
 
     a = new Room("a");
-        a->addItem(new Item("x", 1, 11, "north", true, "No info"));
-        a->addItem(new Item("y", 2, 22, "south", true, "No info"));
+        a->addItem(new Item("x", 1, 11, "north", true, "No info", false));
+        a->addItem(new Item("y", 2, 22, "south", true, "No info", false));
     b = new Room("b");
-        b->addItem(new Item("xx", 3, 33, "east", true, "No info"));
-        b->addItem(new Item("yy", 4, 44, "west", true, "No info"));
+        b->addItem(new Item("xx", 3, 33, "east", true, "No info", false));
+        b->addItem(new Item("yy", 4, 44, "west", true, "No info", false));
     c = new Room("c");
     d = new Room("d");
     e = new Room("e");
@@ -39,8 +39,8 @@ void MainWindow::createRooms()  {
     h = new Room("h");
     i = new Room("i");
     j = new Room("j");
-        j->addItem(new Item("painting", 1, 11, "north", false, "Painted in 1964"));
-        j->addItem(new Item("key", 2, 22, "south", true, "Its a key"));
+        j->addItem(new Item("painting", 1, 11, "north", false, "Painted in 1964", false));
+        j->addItem(new Item("key", 2, 22, "south", true, "Its a key", true, 1));
 
 //             (N, E, S, W)
     a->setExits(NULL, b, d, c);
@@ -53,6 +53,19 @@ void MainWindow::createRooms()  {
     h->setExits(NULL, NULL, c, NULL);
     i->setExits(NULL, d, NULL, j);
     j->setExits(NULL,i,NULL,NULL);
+
+   //              (N, E, S, W)
+
+     a->setLocks(0, 0, 0, 0);
+     b->setLocks(0, 0, 0, 0);
+     c->setLocks(0, 0, 0, 0);
+     d->setLocks(0, 0, 0, 0);
+     e->setLocks(0, 0, 0, 0);
+     f->setLocks(0, 0, 0, 0);
+     g->setLocks(0, 0, 0, 0);
+     h->setLocks(0, 0, 0, 0);
+     i->setLocks(0,2, 0, 0);
+     j->setLocks(0, 1, 0, 0);
 
         currentRoom = j;
 }
@@ -127,7 +140,8 @@ bool MainWindow::processCommand(Command command) {
 
     else if (commandWord.compare("go") == 0)
     {
-        goRoom(command);
+        string facing = character->getFacing();
+        goRoom(command, facing);
         string RoomInfo = currentRoom->longDescription(character->getFacing());
         ui->Label2->setText(QString::fromStdString(RoomInfo));
         fillItems();
@@ -214,7 +228,7 @@ void MainWindow::printHelp() {
 
 }
 
-void MainWindow::goRoom(Command command) {
+void MainWindow::goRoom(Command command, string facing) {
     if (!command.hasSecondWord()) {
         cout << "incomplete input"<< endl;
         return;
@@ -227,6 +241,9 @@ void MainWindow::goRoom(Command command) {
 
     if (nextRoom == NULL)
         cout << "underdefined input"<< endl;
+    else if(currentRoom->isLocked(facing)==true){
+        cout<< "locked"<< endl;
+    }
     else {
         currentRoom = nextRoom;
         aMap.setMapLocation(currentRoom->shortDescription());

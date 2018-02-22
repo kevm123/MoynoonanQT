@@ -16,9 +16,12 @@ private:
     string placed;
     bool obtainable;
     string InvestigateString;
+    bool isKey;
+    int keyNum;
 
 public:
-    Item (string description, int inWeight, float inValue, string inplaced, bool obtainable, string inString);
+    Item (string description, int inWeight, float inValue, string inplaced, bool obtainable, string inString, bool isKey, int inKeyNum);
+    Item (string description, int inWeight, float inValue, string inplaced, bool obtainable, string inString, bool isKey);
     Item (string description);
 	string getShortDescription();
     string getLongDescription();
@@ -32,6 +35,7 @@ public:
     void setPlaced(string p);
     bool getObtainable();
     string getInvestigateString();
+    bool getIsKey();
 };
 
 #endif /*ITEM_H_*/
