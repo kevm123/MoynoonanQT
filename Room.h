@@ -34,6 +34,9 @@ public:
     Item takeItem(int location);
     string getItemI(int num);
     Item getItem(int location);
+    bool isADoor(string facing);
+    int getLockNum(string facing);
+    void setLockNum(string facing);
 };
 
 #endif

@@ -332,3 +332,31 @@ void MainWindow::fillItems()
         }
 }
 
+
+void MainWindow::on_UseButton_clicked()
+{
+    string itemName = (ui->ObtainedItems->currentText()).toStdString();
+    Item *itemToUse = character->getItemByString(itemName);
+
+    bool isAKey= itemToUse->getIsKey();
+    if(isAKey==true){
+        int keyNum = itemToUse->getKeyNum();
+        unlockDoor(keyNum);
+    }else{
+        cout<< "trying to use "<< itemName << endl;
+    }
+}
+
+void MainWindow::unlockDoor(int keyNum){
+
+    string facing = character->getFacing();
+    if(currentRoom->isADoor(facing)==true){
+        cout << "attempting to head through the " << facing << " door"<< endl;
+        if(keyNum == currentRoom->getLockNum(facing)){
+             cout << "key worked !" << endl;
+             currentRoom->setLockNum(facing);
+        }else{
+            cout << "wrong key for this lock" << endl;
+        }
+    }
+}

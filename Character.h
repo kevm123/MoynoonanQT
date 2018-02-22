@@ -26,6 +26,7 @@ public:
     string longDescription();
     int numberOfItems();
     string getItemI(int num);
+    Item* getItemByString(string itemName);
     string getFacing();
     void setFacing(string direction);
 

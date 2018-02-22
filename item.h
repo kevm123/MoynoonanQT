@@ -35,7 +35,9 @@ public:
     void setPlaced(string p);
     bool getObtainable();
     string getInvestigateString();
+    int getKeyNum();
     bool getIsKey();
+
 };
 
 #endif /*ITEM_H_*/

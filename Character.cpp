@@ -1,4 +1,5 @@
 #include "Character.h"
+#include "Item.h"
 
 Character::Character(string description) {
     this->description = description;
@@ -28,6 +29,17 @@ int Character::numberOfItems() {
 string Character::getItemI(int num)
 {
     return itemsInCharacter[num].getShortDescription();
+}
+
+Item* Character::getItemByString(string itemName){
+    for(int i=0; i<numberOfItems(); i++){
+        if(itemsInCharacter[i].getShortDescription()==itemName)
+            return &itemsInCharacter[i];
+        else
+            return nullptr;
+
+    }
+    return nullptr;
 }
 
 string Character::getFacing()

@@ -1,5 +1,6 @@
 #include "Room.h"
 #include "Command.h"
+#include "Character.h"
 
 
 Room::Room(string description) {
@@ -128,4 +129,18 @@ bool Room::isLocked(string facing){
         return false;
     }
 
+}
+bool Room::isADoor(string facing){
+    if(exits[facing]!= NULL)
+        return true;
+    else{
+        return false;
+    }
+}
+
+int Room::getLockNum(string facing){
+    return locks[facing];
+}
+void Room::setLockNum(string facing){
+    locks[facing]=0;
 }

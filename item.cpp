@@ -1,22 +1,24 @@
 #include "item.h"
 
-Item::Item (string inDescription, int inWeightGrams, float inValue, string inplaced, bool obt, string inString, bool isKey /**, int weaponCheck*/, int inKeyNum) {
+Item::Item (string inDescription, int inWeightGrams, float inValue, string inplaced, bool obt, string inString, bool inIsKey /**, int weaponCheck*/, int inKeyNum) {
     description = inDescription;
     setWeight(inWeightGrams);
     value = inValue;
     placed = inplaced;
     obtainable = obt;
     InvestigateString = inString;
+     isKey = inIsKey;
     keyNum = inKeyNum;
     /**weaponCheck(isWeapon);*/
 }
-Item::Item (string inDescription, int inWeightGrams, float inValue, string inplaced, bool obt, string inString, bool isKey /**, int weaponCheck*/) {
+Item::Item (string inDescription, int inWeightGrams, float inValue, string inplaced, bool obt, string inString, bool inIsKey /**, int weaponCheck*/) {
     description = inDescription;
     setWeight(inWeightGrams);
     value = inValue;
     placed = inplaced;
     obtainable = obt;
     InvestigateString = inString;
+    isKey = inIsKey;
     /**weaponCheck(isWeapon);*/
 }
 
@@ -77,4 +79,10 @@ bool Item::getObtainable()
 string Item::getInvestigateString()
 {
     return InvestigateString;
+}
+bool Item::getIsKey(){
+    return isKey;
+}
+int Item::getKeyNum(){
+    return keyNum;
 }

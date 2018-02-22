@@ -50,6 +50,8 @@ private slots:
 
     void on_InvestigateButton_clicked();
 
+    void on_UseButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -63,8 +65,8 @@ private:
     void goRoom(Command command, string facing);
     void createItems();
     void displayItems();
-
     void fillItems();
+    void unlockDoor(int keyNum);
 
 };
 
