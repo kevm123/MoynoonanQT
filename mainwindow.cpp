@@ -121,6 +121,7 @@ void MainWindow::printWelcome() {
 bool MainWindow::processCommand(Command command) {
     if (command.isUnknown()) {
         cout << "invalid input"<< endl;
+        ui->outputLabel->setText(QString::fromStdString("invalid input"));
         return false;
     }
 
@@ -152,10 +153,12 @@ bool MainWindow::processCommand(Command command) {
     {
         if (!command.hasSecondWord()) {
         cout << "incomplete input"<< endl;
+        ui->outputLabel->setText("incomplete input");
         }
         else
          if (command.hasSecondWord()) {
         cout << "you're trying to take " + command.getSecondWord() << endl;
+        ui->outputLabel->setText(QString::fromStdString("you're trying to take "+ command.getSecondWord()));
         int location = currentRoom->isItemInRoom(command.getSecondWord());
         if (location  < 0 )
             cout << "item is not in room" << endl;

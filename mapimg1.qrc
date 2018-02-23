@@ -14,5 +14,9 @@
         <file>images/roomMapTemplatePosH.png</file>
         <file>images/roomMapTemplatePosI.png</file>
         <file>images/roomMapTemplatePosJ.png</file>
+        <file>images/buttonEast.png</file>
+        <file>images/buttonNorth.png</file>
+        <file>images/buttonSouth.png</file>
+        <file>images/buttonWest.png</file>
     </qresource>
 </RCC>
