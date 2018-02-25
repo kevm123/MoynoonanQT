@@ -35,7 +35,7 @@ string Room::shortDescription() {
 }
 
 string Room::longDescription(string facing) {
-    return "You are now in room " + description + ".\n" + "You are facing "+ facing + ".\n" + displayItem(facing) + exitString();
+    return "You are facing "+ facing + ".\n" + displayItem(facing) + exitString();
 }
 
 string Room::exitString() {
@@ -144,3 +144,20 @@ int Room::getLockNum(string facing){
 void Room::setLockNum(string facing){
     locks[facing]=0;
 }
+
+void Room::setFacingDescriptions(string north, string east, string south, string west) {
+
+        facingDescriptions["north"] = north;
+
+        facingDescriptions["east"] = east;
+
+        facingDescriptions["south"] = south;
+
+        facingDescriptions["west"] = west;
+}
+
+string Room::getFacingDescription(string facing)
+{
+    return facingDescriptions[facing];
+}
+

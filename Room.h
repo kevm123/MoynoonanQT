@@ -14,6 +14,7 @@ private:
 	string description;
 	map<string, Room*> exits;
     map<string, int> locks;
+    map<string, string> facingDescriptions;
 	string exitString();
     vector <Item> itemsInRoom;
 
@@ -37,6 +38,8 @@ public:
     bool isADoor(string facing);
     int getLockNum(string facing);
     void setLockNum(string facing);
+    void setFacingDescriptions(string north, string east, string south, string west);
+    string getFacingDescription(string facing);
 };
 
 #endif

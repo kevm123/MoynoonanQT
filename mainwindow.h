@@ -67,6 +67,7 @@ private:
     void displayItems();
     void fillItems();
     void unlockDoor(int keyNum);
+    void showDescription(string facing);
 
 };
 

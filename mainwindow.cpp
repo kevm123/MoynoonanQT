@@ -37,9 +37,9 @@ void MainWindow::createRooms()  {
     f = new Room("f");
     g = new Room("g");
     h = new Room("h");
-    i = new Room("i");
+    i = new Room("You are now in a small brightly lit room.\nIt looks like a waiting room.");
          i->addItem(new Item("Oldkey", 2, 22, "east", true, "An old, rusty key", true, 2));
-    j = new Room("j");
+    j = new Room("You are in an old room with a red carpet and no windows.\nYou have no idea where you are.\nUse the buttons below to look around.");
         j->addItem(new Item("painting", 1, 11, "north", false, "Painted in 1964", false));
         j->addItem(new Item("key", 2, 22, "south", true, "Its a key", true, 1));
 
@@ -65,9 +65,19 @@ void MainWindow::createRooms()  {
      f->setLocks(0, 0, 0, 0);
      g->setLocks(0, 0, 0, 0);
      h->setLocks(0, 0, 0, 0);
-     i->setLocks(0,2, 0, 0);
+     i->setLocks(0, 2, 0, 0);
      j->setLocks(0, 1, 0, 0);
 
+     a->setFacingDescriptions("-", "-", "-", "-");
+     b->setFacingDescriptions("-", "-", "-", "-");
+     c->setFacingDescriptions("-", "-", "-", "-");
+     d->setFacingDescriptions("-", "-", "-", "-");
+     e->setFacingDescriptions("-", "-", "-", "-");
+     f->setFacingDescriptions("-", "-", "-", "-");
+     g->setFacingDescriptions("-", "-", "-", "-");
+     h->setFacingDescriptions("-", "-", "-", "-");
+     i->setFacingDescriptions("A window looking out, it is too dark to see anything", "There is a key with a lock, there is a also an old key on the floor", "There is a couch", "There is a room with an open door");
+     j->setFacingDescriptions("There is a painting on a wall", "There is a door with a lock", "There is a key hanging on a hook", "A couch lies in the corner");
         currentRoom = j;
 }
 
@@ -101,7 +111,7 @@ void MainWindow::play() {
 
 void MainWindow::printWelcome() {
 
-        ui->Label1->setText("Welcome to a new Game\nThe button below will guid you through\nPress Continue");
+        showDescription("desc");
         string RoomInfo = currentRoom->longDescription(character->getFacing());
         ui->Label2->setText(QString::fromStdString(RoomInfo));
 
@@ -162,7 +172,7 @@ bool MainWindow::processCommand(Command command) {
         int location = currentRoom->isItemInRoom(command.getSecondWord());
         if (location  < 0 )
             cout << "item is not in room" << endl;
-        else if((currentRoom->getItem(location)).getObtainable()){
+        else if((currentRoom->getItem(location)).getObtainable() && (character->getFacing() == (currentRoom->getItem(location)).getPlaced())){
             cout << "item is in room" << endl;
             cout << "index number " << + location << endl;
             cout << endl;
@@ -177,11 +187,14 @@ bool MainWindow::processCommand(Command command) {
             for(int i = 0; i < numOfItems; i++)
                 {
                     ui->ObtainedItems->addItem(QString::fromStdString(character->getItemI(i)));
+                    ui->outputLabel->setText(QString::fromStdString("have obtained the "+ command.getSecondWord()));
                 }
 
             //Update Items In Room DropDown
             fillItems();
         }
+        else
+            ui->outputLabel->setText(QString::fromStdString("You are not facing in the direction of the object"));
         }
     }
 
@@ -195,12 +208,14 @@ bool MainWindow::processCommand(Command command) {
         int location = currentRoom->isItemInRoom(command.getSecondWord());
         if (location  < 0 )
             cout << "item is not in room" << endl;
-        else
+        else if((character->getFacing() == (currentRoom->getItem(location)).getPlaced()))
         {
             Item ItemToInvestigate = currentRoom->getItem(location);
             string output = ItemToInvestigate.getInvestigateString();
-            cout<<output<<endl;
+             ui->outputLabel->setText(QString::fromStdString(output));
          }
+        else
+            ui->outputLabel->setText(QString::fromStdString("You are not facing in the direction of the object"));
     }
     }
 
@@ -250,6 +265,7 @@ void MainWindow::goRoom(Command command, string facing) {
     }
     else {
         currentRoom = nextRoom;
+        showDescription("desc");
         aMap.setMapLocation(currentRoom->shortDescription());
         cout << currentRoom->longDescription(character->getFacing()) << endl;
     }
@@ -266,6 +282,7 @@ string MainWindow::go(string direction) {
     else
     {
         currentRoom = nextRoom;
+        showDescription("desc");
         return currentRoom->longDescription(character->getFacing());
     }
 }
@@ -277,6 +294,7 @@ void MainWindow::on_NorthButton_clicked()
     character->setFacing("north");
     string RoomInfo = currentRoom->longDescription(character->getFacing());
     ui->Label2->setText(QString::fromStdString(RoomInfo));
+    showDescription("north");
 }
 
 void MainWindow::on_SouthButton_clicked()
@@ -284,6 +302,7 @@ void MainWindow::on_SouthButton_clicked()
     character->setFacing("south");
     string RoomInfo = currentRoom->longDescription(character->getFacing());
     ui->Label2->setText(QString::fromStdString(RoomInfo));
+    showDescription("south");
 }
 
 void MainWindow::on_EastButton_clicked()
@@ -291,6 +310,7 @@ void MainWindow::on_EastButton_clicked()
     character->setFacing("east");
     string RoomInfo = currentRoom->longDescription(character->getFacing());
     ui->Label2->setText(QString::fromStdString(RoomInfo));
+    showDescription("east");
 }
 
 void MainWindow::on_West_clicked()
@@ -298,6 +318,7 @@ void MainWindow::on_West_clicked()
     character->setFacing("west");
     string RoomInfo = currentRoom->longDescription(character->getFacing());
     ui->Label2->setText(QString::fromStdString(RoomInfo));
+    showDescription("west");
 }
 
 
@@ -363,4 +384,16 @@ void MainWindow::unlockDoor(int keyNum){
             cout << "wrong key for this lock" << endl;
         }
     }
+}
+
+void MainWindow::showDescription(string facing)
+{
+    string desc;
+    if(!facing.compare("desc")){
+         desc = currentRoom->shortDescription();
+    }
+    else{
+        desc = currentRoom->getFacingDescription(facing);
+    }
+    ui->Label1->setText(QString::fromStdString(desc));
 }
