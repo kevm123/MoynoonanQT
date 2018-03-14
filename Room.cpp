@@ -3,7 +3,8 @@
 #include "Character.h"
 
 
-Room::Room(string description) {
+Room::Room(string name, string description) {
+    this->name = name;
 	this->description = description;
 }
 
@@ -32,6 +33,10 @@ void Room::setLocks(int north, int east, int south, int west) {
 
 string Room::shortDescription() {
 	return description;
+}
+
+string Room::getName() {
+    return name;
 }
 
 string Room::longDescription(string facing) {

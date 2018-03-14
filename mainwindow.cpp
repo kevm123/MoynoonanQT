@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
      createRooms();
     // AreaMap aMap;
      aMap.show();
-     aMap.setMapLocation(currentRoom->shortDescription());
+     aMap.setMapLocation(currentRoom->getName());
      play();
 }
 
@@ -25,23 +25,23 @@ MainWindow::~MainWindow()
 void MainWindow::createRooms()  {
     Room *a, *b, *c, *d, *e, *f, *g, *h, *i, *j;
 
-    a = new Room("a");
+    a = new Room("a","Directly in front of you is a dentists chair.\nBut none of the other tools appear to be dental related.\nA worrying amount of red stains are scattered throughout the room.\nTo the south is a hallway.\nThere are also doors to the east and west.");
         a->addItem(new Item("x", 1, 11, "north", true, "No info", false));
         a->addItem(new Item("y", 2, 22, "south", true, "No info", false));
-    b = new Room("b");
+    b = new Room("b","You are now standing a room filled with sleepingbags and old mattress's.\nTheres bars on the windows but its too dark to see outside.\nA small dimly lit candle lights the room.\nA small trail of blood seems to go under a door to the north.");
         b->addItem(new Item("xx", 3, 33, "east", true, "No info", false));
         b->addItem(new Item("yy", 4, 44, "west", true, "No info", false));
-    c = new Room("c");
-    d = new Room("d");
-    e = new Room("e");
-    f = new Room("f");
-    g = new Room("g");
-    h = new Room("h");
-    i = new Room("You are now in a small brightly lit room.\nIt looks like a waiting room.");
-         i->addItem(new Item("Oldkey", 2, 22, "east", true, "An old, rusty key", true, 2));
-    j = new Room("You are in an old room with a red carpet and no windows.\nYou have no idea where you are.\nUse the buttons below to look around.");
-        j->addItem(new Item("painting", 1, 11, "north", false, "Painted in 1964", false));
-        j->addItem(new Item("key", 2, 22, "south", true, "Its a key", true, 1));
+    c = new Room("c","A large steel door with a very unique lock is to the north of the room.\nThis door has a letter box but its welded shut.\nSurely this is the way out.");
+    d = new Room("d","You are now standing in a small hallway.\nA large skylight above you shows a clear dark night.\nIn front of you is a door that says --TOILETS-- and another unlocked door is to the north.");
+    e = new Room("e","A light flickering overhead displays a small tiled bathroom.\nThere appears to be blood on the floor and a mop and bucket lie next to it.");
+    f = new Room("f","f");
+    g = new Room("g","This room is not like the others.\nIts brightly lit with a large sign that reads \n--Len Groseman, Your one stp shop for pain relief and a better life-- \nabove an apparent receptionists desk.\nTo the east is a large bolted door with a keypad.");
+    h = new Room("h","You enter a dead end. There is nowhere to go only back");
+    i = new Room("i","You are now in a small brightly lit room.\nIt looks like some kind of waiting room.\nTheres a table in the middle of the room with dusty magazines and chairs dotted around.");
+         i->addItem(new Item("Oldkey", 2, 22, "east", true, "An old, rusty key hangs on the wall", true, 2));
+    j = new Room("j","Welcome to the game.\nYou are in an old room with a red carpet and no windows.\nYou have no idea where you are but you know you must find a way out...\nUse the buttons below to look around.");
+        j->addItem(new Item("painting", 1, 11, "north", false, "The painting is of a ship in a storm.\nIt says in the corner --Painted in 1964--", false));
+        j->addItem(new Item("key", 2, 22, "south", true, "An old key just lying on the ground.\nYou can tell from the dust marks its been there a while.", true, 1));
 
 //             (N, E, S, W)
     a->setExits(NULL, b, d, c);
@@ -266,7 +266,7 @@ void MainWindow::goRoom(Command command, string facing) {
     else {
         currentRoom = nextRoom;
         showDescription("desc");
-        aMap.setMapLocation(currentRoom->shortDescription());
+        aMap.setMapLocation(currentRoom->getName());
         cout << currentRoom->longDescription(character->getFacing()) << endl;
     }
 }

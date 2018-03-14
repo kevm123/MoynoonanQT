@@ -11,6 +11,7 @@ using std::vector;
 class Room {
 
 private:
+    string name;
 	string description;
 	map<string, Room*> exits;
     map<string, int> locks;
@@ -21,7 +22,7 @@ private:
 
 public:
     int numberOfItems();
-	Room(string description);
+    Room(string name, string description);
 	void setExits(Room *north, Room *east, Room *south, Room *west);
     void setLocks(int north, int east, int south, int west);
     bool isLocked(string facing);
@@ -40,6 +41,7 @@ public:
     void setLockNum(string facing);
     void setFacingDescriptions(string north, string east, string south, string west);
     string getFacingDescription(string facing);
+    string getName();
 };
 
 #endif
