@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "Command.h"
 #include "areamap.h"
+#include "finaldoor.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -43,7 +44,7 @@ void MainWindow::createRooms()  {
 
     f = new Room("f","f");
 
-    g = new Room("g","This room is not like the others.\nIts brightly lit with a large sign that reads \n--Len Groseman, Your one stp shop for pain relief and a better life-- \nabove an apparent receptionists desk.\nTo the east is a large bolted door with a keypad.");
+    g = new Room("g","This room is not like the others.\nIts brightly lit with a large sign that reads \n--Len Groseman, Your one stop shop for pain relief and a better life-- \nAbove an apparent receptionists desk.\nTo the east is a large bolted door with a keypad.");
 
     h = new Room("h","You enter a dead end. There is nowhere to go only back");
 
@@ -68,25 +69,36 @@ void MainWindow::createRooms()  {
 
    //            (N, E, S, W)
 
+    /*a->setLocks(0, 0, 0, 0);
+    b->setLocks(0, 0, 0, 0);
+    c->setLocks(0, 0, 0, 0);
+    d->setLocks(0, 0, 0, 0);
+    e->setLocks(0, 0, 0, 0);
+    f->setLocks(0, 0, 0, 0);
+    g->setLocks(0, 0, 0, 1000);
+    h->setLocks(0, 0, 0, 0);
+    i->setLocks(0, 0, 0, 0);
+    j->setLocks(0, 0, 0, 0);*/
+
      a->setLocks(0, 5, 0, 4);
      b->setLocks(7, 0, 0, 0);
      c->setLocks(6, 0, 0, 0);
      d->setLocks(0, 0, 0, 0);
      e->setLocks(0, 0, 0, 0);
-     f->setLocks(0, 0, 0, 0);
+     f->setLocks(0, 0, 0, 1000);
      g->setLocks(0, 0, 0, 8);
      h->setLocks(0, 0, 0, 0);
      i->setLocks(0, 2, 0, 0);
      j->setLocks(0, 1, 0, 0);
 
-     a->setFacingDescriptions("-", "-", "-", "-");
-     b->setFacingDescriptions("-", "-", "-", "-");
-     c->setFacingDescriptions("-", "-", "-", "-");
-     d->setFacingDescriptions("-", "-", "-", "-");
-     e->setFacingDescriptions("-", "-", "-", "-");
+     a->setFacingDescriptions("There is nothing but a large brick wall", "A large blue door stands in front of you", "An open door leading to a hall with a skylight", "A red door is in front of you");
+     b->setFacingDescriptions("A large door with a trail of blood, the blood still seems wet.", "Chains line the walls and theres claw marks on the floor, an unusual looking key is on the chains", "Sleeping bags and old mattress's are scattered on the floor", "A blue door is open");
+     c->setFacingDescriptions("That steel door is in front of you, You cant look out the letterbox but it seems promising", "The red door is open", "Nothing but a plain wall to the south", "A small Modern Key seems to appear from a crack in the wall");
+     d->setFacingDescriptions("An open door leads to another room", "A door that says --TOILETS--, I guess we know whats in there", "A large carpet covers the wall, It looks african in style", "An open door leads to another room");
+     e->setFacingDescriptions("A tile covered wall", "There is a large blood spill with an overturned bucket and mop/nA RedKey is lying in the blood and a BlueKey is tied to the handle of the mop", "A dirty sink is propped against the wall", "A door leads to a hallway");
      f->setFacingDescriptions("-", "-", "-", "-");
-     g->setFacingDescriptions("-", "-", "-", "-");
-     h->setFacingDescriptions("-", "-", "-", "-");
+     g->setFacingDescriptions("Large windows cover the wall but it is too dark to see out", "The receptionist desk looks like its used often, a small notepad is on it", "A door leads to another room", "A large steel door with a numeric lock, Can we guess the code??");
+     h->setFacingDescriptions("Plain white wall", "Plain white wall", "Plain white wall", "Plain white wall");
      i->setFacingDescriptions("A window looking out, it is too dark to see anything", "There is a key with a lock, there is a also an old key on the floor", "There is a couch", "There is a room with an open door");
      j->setFacingDescriptions("There is a painting on a wall", "There is a door with a lock", "There is a key hanging on a hook", "A couch lies in the corner");
         currentRoom = j;
@@ -271,6 +283,12 @@ void MainWindow::goRoom(Command command, string facing) {
 
     if (nextRoom == NULL)
         cout << "underdefined input"<< endl;
+    else if(1000 == currentRoom->getLockNum(facing))
+    {
+        fd.setCode(1234);
+        fd.show();
+        currentRoom->setLockNum(facing);
+    }
     else if(currentRoom->isLocked(facing)==true){
         cout<< "locked"<< endl;
     }

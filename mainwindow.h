@@ -10,6 +10,7 @@
 #include "Room.h"
 #include "item.h"
 #include "areamap.h"
+#include "finaldoor.h"
 #include <iostream>
 #include <string>
 using namespace std;
@@ -31,6 +32,7 @@ public:
     Room *currentRoom;
     string getCurrentRoom();
     AreaMap aMap;
+    FinalDoor fd;
 
 
 private slots:

@@ -32,7 +32,8 @@ SOURCES += \
     Command.cpp \
     item.cpp \
     Room.cpp \
-    areamap.cpp
+    areamap.cpp \
+    finaldoor.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -42,11 +43,13 @@ HEADERS += \
     item.h \
     Room.h \
     Parser.h \
-    areamap.h
+    areamap.h \
+    finaldoor.h
 
 FORMS += \
         mainwindow.ui \
-    areamap.ui
+    areamap.ui \
+    finaldoor.ui
 
 RESOURCES += \
     mapimg1.qrc
