@@ -27,14 +27,12 @@ void MainWindow::createRooms()  {
     Room *a, *b, *c, *d, *e, *f, *g, *h, *i, *j;
 
     a = new Room("a","Directly in front of you is a dentists chair.\nBut none of the other tools appear to be dental related.\nA worrying amount of red stains are scattered throughout the room.\nTo the south is a hallway.\nThere is a red door to the west and a blue door to the east.");
-        a->addItem(new Item("x", 1, 11, "north", true, "No info", false));
-        a->addItem(new Item("y", 2, 22, "south", true, "No info", false));
 
     b = new Room("b","You are now standing a room filled with sleepingbags and old mattress's.\nTheres bars on the windows but its too dark to see outside.\nA small dimly lit candle lights the room.\nA small trail of blood seems to go under a door to the north.");
-        b->addItem(new Item("Unusual Key", 3, 33, "east", true, "A strange key for a strange door", true, 6));
+        b->addItem(new Item("UnusualKey", 3, 33, "east", true, "A strange key for a strange door", true, 6));
 
     c = new Room("c","A large steel door with a very unique lock is to the north of the room.\nThis door has a letter box but its welded shut.\nSurely this is the way out.");
-        c->addItem(new Item("Modern Key", 3, 33, "west", true, "A normal modern key", true, 7));
+        c->addItem(new Item("ModernKey", 3, 33, "west", true, "A normal modern key", true, 7));
 
     d = new Room("d","You are now standing in a small hallway.\nA large skylight above you shows a clear dark night.\nIn front of you is a door that says --TOILETS-- and another unlocked door is to the north.");
 
@@ -42,7 +40,7 @@ void MainWindow::createRooms()  {
         e->addItem(new Item("RedKey", 2, 22, "east", true, "A Red Key", true, 4));
         e->addItem(new Item("BlueKey", 2, 22, "east", true, "A Blue Key", true, 5));
 
-    f = new Room("f","f");
+    f = new Room("f","Congratulations, You have escaped!!");
 
     g = new Room("g","This room is not like the others.\nIts brightly lit with a large sign that reads \n--Len Groseman, Your one stop shop for pain relief and a better life-- \nAbove an apparent receptionists desk.\nTo the east is a large bolted door with a keypad.");
 
@@ -69,6 +67,7 @@ void MainWindow::createRooms()  {
 
    //            (N, E, S, W)
 
+    //Used to quickly move between room, removes all locks
     /*a->setLocks(0, 0, 0, 0);
     b->setLocks(0, 0, 0, 0);
     c->setLocks(0, 0, 0, 0);
@@ -85,8 +84,8 @@ void MainWindow::createRooms()  {
      c->setLocks(6, 0, 0, 0);
      d->setLocks(0, 0, 0, 0);
      e->setLocks(0, 0, 0, 0);
-     f->setLocks(0, 0, 0, 1000);
-     g->setLocks(0, 0, 0, 8);
+     f->setLocks(0, 0, 0, 0);
+     g->setLocks(0, 0, 0, 1000);
      h->setLocks(0, 0, 0, 0);
      i->setLocks(0, 2, 0, 0);
      j->setLocks(0, 1, 0, 0);
@@ -286,8 +285,8 @@ void MainWindow::goRoom(Command command, string facing) {
     else if(1000 == currentRoom->getLockNum(facing))
     {
         fd.setCode(1234);
+        fd.setUpDoor(currentRoom, facing);
         fd.show();
-        currentRoom->setLockNum(facing);
     }
     else if(currentRoom->isLocked(facing)==true){
         cout<< "locked"<< endl;
@@ -407,10 +406,10 @@ void MainWindow::unlockDoor(int keyNum){
     if(currentRoom->isADoor(facing)==true){
         cout << "attempting to head through the " << facing << " door"<< endl;
         if(keyNum == currentRoom->getLockNum(facing)){
-             cout << "key worked !" << endl;
+            ui->Label1->setText("Key Worked, Door unlocked!");
              currentRoom->setLockNum(facing);
         }else{
-            cout << "wrong key for this lock" << endl;
+            ui->Label1->setText("Wrong key for this lock");
         }
     }
 }

@@ -18,6 +18,12 @@ FinalDoor::setCode(int c)
     code = c;
 }
 
+FinalDoor::setUpDoor(Room *c, string f)
+{
+    currentRoom = c;
+    facing = f;
+}
+
 void FinalDoor::on_Button_clicked()
 {
     QString in = ui->Input->text();
@@ -25,6 +31,7 @@ void FinalDoor::on_Button_clicked()
     if(inInt == code)
     {
         ui->Output->setText("Congratulations, The door is Open!!");
+        currentRoom->setLockNum(facing);
     }
     else
         ui->Output->setText("Wrong Code");

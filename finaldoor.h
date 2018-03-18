@@ -16,6 +16,7 @@ public:
     explicit FinalDoor(QWidget *parent = 0);
     ~FinalDoor();
     setCode(int c);
+    setUpDoor(Room *c, string f);
 
 private slots:
     void on_Button_clicked();
@@ -24,6 +25,8 @@ private slots:
 
 private:
     int code;
+    Room *currentRoom;
+    string facing;
     Ui::FinalDoor *ui;
 };
 
