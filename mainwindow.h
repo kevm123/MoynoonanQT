@@ -9,6 +9,7 @@
 #include "Parser.h"
 #include "Room.h"
 #include "item.h"
+#include "key.h"
 #include "areamap.h"
 #include "finaldoor.h"
 #include <iostream>

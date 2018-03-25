@@ -116,8 +116,16 @@ Item Room::getItem(int location)
 Item Room::takeItem(int location)
 {
     Item takingItem = itemsInRoom[location];
-    itemsInRoom.erase(itemsInRoom.begin()+location);
-    return takingItem;
+    if(takingItem.getIsKey()==true){
+        Key takingKey = (Key) itemsInRoom[location];
+        itemsInRoom.erase(itemsInRoom.begin()+location);
+        return takingKey;
+    }else{
+        itemsInRoom.erase(itemsInRoom.begin()+location);
+        return takingItem;
+    }
+
+
 }
 
 string Room::getItemI(int num)

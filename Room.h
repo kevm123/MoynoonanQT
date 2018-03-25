@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include "item.h"
+#include "Key.h"
 using namespace std;
 using std::vector;
 

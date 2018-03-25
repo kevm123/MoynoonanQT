@@ -33,7 +33,8 @@ SOURCES += \
     item.cpp \
     Room.cpp \
     areamap.cpp \
-    finaldoor.cpp
+    finaldoor.cpp \
+    key.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -44,7 +45,8 @@ HEADERS += \
     Room.h \
     Parser.h \
     areamap.h \
-    finaldoor.h
+    finaldoor.h \
+    key.h
 
 FORMS += \
         mainwindow.ui \

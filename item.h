@@ -7,7 +7,7 @@
 using namespace std;
 
 class Item {
-private:
+protected:
 	string description;
 	string longDescription;
 	int weightGrams;
@@ -17,10 +17,8 @@ private:
     bool obtainable;
     string InvestigateString;
     bool isKey;
-    int keyNum;
 
 public:
-    Item (string description, int inWeight, float inValue, string inplaced, bool obtainable, string inString, bool isKey, int inKeyNum);
     Item (string description, int inWeight, float inValue, string inplaced, bool obtainable, string inString, bool isKey);
     Item (string description);
 	string getShortDescription();
@@ -35,7 +33,6 @@ public:
     void setPlaced(string p);
     bool getObtainable();
     string getInvestigateString();
-    int getKeyNum();
     bool getIsKey();
 
 };
