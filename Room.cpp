@@ -60,8 +60,6 @@ Room* Room::nextRoom(string direction) {
 }
 
 void Room::addItem(Item *inItem) {
-    //cout <<endl;
-    //cout << "Just added" + inItem->getLongDescription();
     itemsInRoom.push_back(*inItem);
 }
 
@@ -127,10 +125,8 @@ string Room::getItemI(int num)
 bool Room::isLocked(string facing){
 
     if(locks[facing]!=0){
-        cout<< locks[facing] << facing << endl;
         return true;
     }else{
-        cout<< locks[facing] << facing << endl;
         return false;
     }
 

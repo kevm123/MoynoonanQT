@@ -18,7 +18,6 @@ string Character::longDescription()
   ret += "\n Item list:\n";
   for (vector<Item>::iterator i = itemsInCharacter.begin(); i != itemsInCharacter.end(); i++)
     ret += "\t"+ (*i).getLongDescription() + "\n";
-  cout << ret << endl;
   return ret;
 }
 

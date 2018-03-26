@@ -43,6 +43,7 @@ void MainWindow::createRooms()  {
     f = new Room("f","Congratulations, You have escaped!!");
 
     g = new Room("g","This room is not like the others.\nIts brightly lit with a large sign that reads \n--Len Groseman, Your one stop shop for pain relief and a better life-- \nAbove an apparent receptionists desk.\nTo the east is a large bolted door with a keypad.");
+        g->addItem(new Item("Notepad", 2,22, "east", false, "Note to self:\nWhen the ship sailed the door opened.", false));
 
     h = new Room("h","You enter a dead end. There is nowhere to go only back");
 
@@ -94,7 +95,7 @@ void MainWindow::createRooms()  {
      b->setFacingDescriptions("A large door with a trail of blood, the blood still seems wet.", "Chains line the walls and theres claw marks on the floor, an unusual looking key is on the chains", "Sleeping bags and old mattress's are scattered on the floor", "A blue door is open");
      c->setFacingDescriptions("That steel door is in front of you, You cant look out the letterbox but it seems promising", "The red door is open", "Nothing but a plain wall to the south", "A small Modern Key seems to appear from a crack in the wall");
      d->setFacingDescriptions("An open door leads to another room", "A door that says --TOILETS--, I guess we know whats in there", "A large carpet covers the wall, It looks african in style", "An open door leads to another room");
-     e->setFacingDescriptions("A tile covered wall", "There is a large blood spill with an overturned bucket and mop/nA RedKey is lying in the blood and a BlueKey is tied to the handle of the mop", "A dirty sink is propped against the wall", "A door leads to a hallway");
+     e->setFacingDescriptions("A tile covered wall", "There is a large blood spill with an overturned bucket and mop\nA RedKey is lying in the blood and a BlueKey is tied to the handle of the mop", "A dirty sink is propped against the wall", "A door leads to a hallway");
      f->setFacingDescriptions("-", "-", "-", "-");
      g->setFacingDescriptions("Large windows cover the wall but it is too dark to see out", "The receptionist desk looks like its used often, a small notepad is on it", "A door leads to another room", "A large steel door with a numeric lock, Can we guess the code??");
      h->setFacingDescriptions("Plain white wall", "Plain white wall", "Plain white wall", "Plain white wall");
@@ -112,23 +113,6 @@ void MainWindow::play() {
     fillItems();
     printWelcome();
 
-   /* // Enter the main command loop.  Here we repeatedly read commands and
-    // execute them until the ZorkUL game is over.
-
-    bool finished = false;
-
-
-        // Create pointer to command and give it a command.
-        Command* command = parser.getCommand();
-        // Pass dereferenced command and check for end of game.
-        finished = processCommand(*command);
-        // Free the memory allocated by "parser.getCommand()"
-        //   with ("return new Command(...)")
-        delete command;
-
-
-    cout << endl;
-    cout << "end" << endl;*/
 }
 
 void MainWindow::printWelcome() {
@@ -137,12 +121,6 @@ void MainWindow::printWelcome() {
         string RoomInfo = currentRoom->longDescription(character->getFacing());
         ui->Label2->setText(QString::fromStdString(RoomInfo));
 
-    /*cout << "start"<< endl;
-    cout << "info for help"<< endl;
-    cout << "valid inputs are; " << endl;
-    parser.showCommands();
-    cout << endl;
-    cout << currentRoom->longDescription() << endl;*/
 }
 
 /**
@@ -152,27 +130,12 @@ void MainWindow::printWelcome() {
  */
 bool MainWindow::processCommand(Command command) {
     if (command.isUnknown()) {
-        cout << "invalid input"<< endl;
         ui->outputLabel->setText(QString::fromStdString("invalid input"));
         return false;
     }
 
     string commandWord = command.getCommandWord();
-    if (commandWord.compare("info") == 0)
-        printHelp();
-
-    else if (commandWord.compare("map") == 0)
-        {
-        cout << "[h] --- [f] --- [g]" << endl;
-        cout << "         |         " << endl;
-        cout << "         |         " << endl;
-        cout << "[c] --- [a] --- [b]" << endl;
-        cout << "         |         " << endl;
-        cout << "         |         " << endl;
-        cout << "[i] --- [d] --- [e]" << endl;
-        }
-
-    else if (commandWord.compare("go") == 0)
+    if(commandWord.compare("go") == 0)
     {
         string facing = character->getFacing();
         goRoom(command, facing);
@@ -183,22 +146,10 @@ bool MainWindow::processCommand(Command command) {
 
     else if (commandWord.compare("take") == 0)
     {
-        if (!command.hasSecondWord()) {
-        cout << "incomplete input"<< endl;
-        ui->outputLabel->setText("incomplete input");
-        }
-        else
          if (command.hasSecondWord()) {
-        cout << "you're trying to take " + command.getSecondWord() << endl;
         ui->outputLabel->setText(QString::fromStdString("you're trying to take "+ command.getSecondWord()));
         int location = currentRoom->isItemInRoom(command.getSecondWord());
-        if (location  < 0 )
-            cout << "item is not in room" << endl;
-        else if((currentRoom->getItem(location)).getObtainable() && (character->getFacing() == (currentRoom->getItem(location)).getPlaced())){
-            cout << "item is in room" << endl;
-            cout << "index number " << + location << endl;
-            cout << endl;
-            cout << currentRoom->longDescription(character->getFacing()) << endl;
+        if((currentRoom->getItem(location)).getObtainable() && (character->getFacing() == (currentRoom->getItem(location)).getPlaced())){
 
             currentRoom->getItem(location).setPlaced("");
             character->addItem(currentRoom->takeItem(location));
@@ -209,12 +160,14 @@ bool MainWindow::processCommand(Command command) {
             for(int i = 0; i < numOfItems; i++)
                 {
                     ui->ObtainedItems->addItem(QString::fromStdString(character->getItemI(i)));
-                    ui->outputLabel->setText(QString::fromStdString("have obtained the "+ command.getSecondWord()));
+                    ui->outputLabel->setText(QString::fromStdString("You have obtained the "+ command.getSecondWord()));
                 }
 
             //Update Items In Room DropDown
             fillItems();
         }
+        else if(!(currentRoom->getItem(location)).getObtainable())
+            ui->outputLabel->setText(QString::fromStdString("This Item cannot be taken.\nYou can only investigate it."));
         else
             ui->outputLabel->setText(QString::fromStdString("You are not facing in the direction of the object"));
         }
@@ -222,14 +175,10 @@ bool MainWindow::processCommand(Command command) {
 
     else if (commandWord.compare("Investigate") == 0)
     {
-        if (!command.hasSecondWord()) {
-        cout << "incomplete input"<< endl;
-        }
-        else
          if (command.hasSecondWord()) {
         int location = currentRoom->isItemInRoom(command.getSecondWord());
         if (location  < 0 )
-            cout << "item is not in room" << endl;
+            ui->outputLabel->setText(QString::fromStdString("Cannot find this item in the room, maybe you have already picked it up"));
         else if((character->getFacing() == (currentRoom->getItem(location)).getPlaced()))
         {
             Item ItemToInvestigate = currentRoom->getItem(location);
@@ -241,61 +190,31 @@ bool MainWindow::processCommand(Command command) {
     }
     }
 
-
-    /*
-    {
-    if (!command.hasSecondWord()) {
-        cout << "incomplete input"<< endl;
-        }
-        else
-            if (command.hasSecondWord()) {
-            cout << "you're adding " + command.getSecondWord() << endl;
-            itemsInRoom.push_Back;
-        }
-    }
-*/
-    else if (commandWord.compare("quit") == 0) {
-        if (command.hasSecondWord())
-            cout << "overdefined input"<< endl;
-        else
-            return true; /**signal to quit*/
-    }
     return false;
 }
 /** COMMANDS **/
-void MainWindow::printHelp() {
-    cout << "valid inputs are; " << endl;
-    parser.showCommands();
-
-}
 
 void MainWindow::goRoom(Command command, string facing) {
-    if (!command.hasSecondWord()) {
-        cout << "incomplete input"<< endl;
-        return;
-    }
-
     string direction = command.getSecondWord();
 
     // Try to leave current room.
     Room* nextRoom = currentRoom->nextRoom(direction);
 
     if (nextRoom == NULL)
-        cout << "underdefined input"<< endl;
+        ui->outputLabel->setText(QString::fromStdString("There is no exit in this direction."));
     else if(1000 == currentRoom->getLockNum(facing))
     {
-        fd.setCode(1234);
+        fd.setCode(1964);
         fd.setUpDoor(currentRoom, facing);
         fd.show();
     }
     else if(currentRoom->isLocked(facing)==true){
-        cout<< "locked"<< endl;
+        ui->outputLabel->setText(QString::fromStdString("This exit is locked.\nUnlock it with a key."));
     }
     else {
         currentRoom = nextRoom;
         showDescription("desc");
         aMap.setMapLocation(currentRoom->getName());
-        cout << currentRoom->longDescription(character->getFacing()) << endl;
     }
 }
 
@@ -395,8 +314,10 @@ void MainWindow::on_UseButton_clicked()
     if(isAKey==true){
         int keyNum = itemToUse->getKeyNum();
         unlockDoor(keyNum);
+        ui->outputLabel->setText(QString::fromStdString("You have unlocked the door"
+                                                        ""));
     }else{
-        cout<< "trying to use "<< itemName << endl;
+        ui->outputLabel->setText(QString::fromStdString("You cannot use this item on anything you are facing"));
     }
 }
 
@@ -404,7 +325,7 @@ void MainWindow::unlockDoor(int keyNum){
 
     string facing = character->getFacing();
     if(currentRoom->isADoor(facing)==true){
-        cout << "attempting to head through the " << facing << " door"<< endl;
+
         if(keyNum == currentRoom->getLockNum(facing)){
             ui->Label1->setText("Key Worked, Door unlocked!");
              currentRoom->setLockNum(facing);

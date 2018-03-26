@@ -45,9 +45,3 @@ Command* Parser::getCommand(string buffer) {
 		return new Command("", word2);
 }
 
-/**
- * Print out a list of valid command words.
- */
-void Parser::showCommands() {
-	commands->showAll();
-}
