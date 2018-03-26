@@ -23,6 +23,7 @@ private:
 public:
     int numberOfItems();
     Room(string name, string description);
+    ~Room();
 	void setExits(Room *north, Room *east, Room *south, Room *west);
     void setLocks(int north, int east, int south, int west);
     bool isLocked(string facing);

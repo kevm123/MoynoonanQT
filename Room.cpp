@@ -8,6 +8,8 @@ Room::Room(string name, string description) {
 	this->description = description;
 }
 
+Room::~Room(void){}
+
 void Room::setExits(Room *north, Room *east, Room *south, Room *west) {
 	if (north != NULL)
 		exits["north"] = north;

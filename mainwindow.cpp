@@ -29,30 +29,30 @@ void MainWindow::createRooms()  {
     a = new Room("a","Directly in front of you is a dentists chair.\nBut none of the other tools appear to be dental related.\nA worrying amount of red stains are scattered throughout the room.\nTo the south is a hallway.\nThere is a red door to the west and a blue door to the east.");
 
     b = new Room("b","You are now standing a room filled with sleepingbags and old mattress's.\nTheres bars on the windows but its too dark to see outside.\nA small dimly lit candle lights the room.\nA small trail of blood seems to go under a door to the north.");
-        b->addItem(new Item("UnusualKey", 3, 33, "east", true, "A strange key for a strange door", true, 6));
+        b->addItem(new Item("UnusualKey", "east", true, "A strange key for a strange door", true, 6));
 
     c = new Room("c","A large steel door with a very unique lock is to the north of the room.\nThis door has a letter box but its welded shut.\nSurely this is the way out.");
-        c->addItem(new Item("ModernKey", 3, 33, "west", true, "A normal modern key", true, 7));
+        c->addItem(new Item("ModernKey", "west", true, "A normal modern key", true, 7));
 
     d = new Room("d","You are now standing in a small hallway.\nA large skylight above you shows a clear dark night.\nIn front of you is a door that says --TOILETS-- and another unlocked door is to the north.");
 
     e = new Room("e","A light flickering overhead displays a small tiled bathroom.\nThere appears to be blood on the floor and a mop and bucket lie next to it.");
-        e->addItem(new Item("RedKey", 2, 22, "east", true, "A Red Key", true, 4));
-        e->addItem(new Item("BlueKey", 2, 22, "east", true, "A Blue Key", true, 5));
+        e->addItem(new Item("RedKey", "east", true, "A Red Key", true, 4));
+        e->addItem(new Item("BlueKey", "east", true, "A Blue Key", true, 5));
 
     f = new Room("f","Congratulations, You have escaped!!");
 
     g = new Room("g","This room is not like the others.\nIts brightly lit with a large sign that reads \n--Len Groseman, Your one stop shop for pain relief and a better life-- \nAbove an apparent receptionists desk.\nTo the east is a large bolted door with a keypad.");
-        g->addItem(new Item("Notepad", 2,22, "east", false, "Note to self:\nWhen the ship sailed the door opened.", false));
+        g->addItem(new Item("Notepad", "east", false, "Note to self:\nWhen the ship sailed the door opened.", false));
 
     h = new Room("h","You enter a dead end. There is nowhere to go only back");
 
     i = new Room("i","You are now in a small brightly lit room.\nIt looks like some kind of waiting room.\nTheres a table in the middle of the room with dusty magazines and chairs dotted around.");
-         i->addItem(new Item("Oldkey", 2, 22, "east", true, "An old, rusty key hangs on the wall", true, 2));
+         i->addItem(new Item("Oldkey", "east", true, "An old, rusty key hangs on the wall", true, 2));
 
          j = new Room("j","Welcome to the game.\nYou are in an old room with a red carpet and no windows.\nYou have no idea where you are but you know you must find a way out...\nUse the buttons below to look around.");
-        j->addItem(new Item("painting", 1, 11, "north", false, "The painting is of a ship in a storm.\nIt says in the corner --Painted in 1964--", false));
-        j->addItem(new Item("key", 2, 22, "south", true, "An old key just lying on the ground.\nYou can tell from the dust marks its been there a while.", true, 1));
+        j->addItem(new Item("painting", "north", false, "The painting is of a ship in a storm.\nIt says in the corner --Painted in 1964--", false));
+        j->addItem(new Item("key", "south", true, "An old key just lying on the ground.\nYou can tell from the dust marks its been there a while.", true, 1));
 
 //             (N, E, S, W)
     a->setExits(NULL, b, d, c);
@@ -67,19 +67,6 @@ void MainWindow::createRooms()  {
     j->setExits(NULL,i,NULL,NULL);
 
    //            (N, E, S, W)
-
-    //Used to quickly move between room, removes all locks
-    /*a->setLocks(0, 0, 0, 0);
-    b->setLocks(0, 0, 0, 0);
-    c->setLocks(0, 0, 0, 0);
-    d->setLocks(0, 0, 0, 0);
-    e->setLocks(0, 0, 0, 0);
-    f->setLocks(0, 0, 0, 0);
-    g->setLocks(0, 0, 0, 1000);
-    h->setLocks(0, 0, 0, 0);
-    i->setLocks(0, 0, 0, 0);
-    j->setLocks(0, 0, 0, 0);*/
-
      a->setLocks(0, 5, 0, 4);
      b->setLocks(7, 0, 0, 0);
      c->setLocks(6, 0, 0, 0);
@@ -314,8 +301,10 @@ void MainWindow::on_UseButton_clicked()
     if(isAKey==true){
         int keyNum = itemToUse->getKeyNum();
         unlockDoor(keyNum);
-        ui->outputLabel->setText(QString::fromStdString("You have unlocked the door"
-                                                        ""));
+        if(currentRoom->getName() == "g")
+            ui->outputLabel->setText(QString::fromStdString("This Door cannot be opened with a key.\nIt needs the code to be entered"));
+        else
+            ui->outputLabel->setText(QString::fromStdString("You have unlocked the door"));
     }else{
         ui->outputLabel->setText(QString::fromStdString("You cannot use this item on anything you are facing"));
     }
