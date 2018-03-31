@@ -18,7 +18,7 @@ private:
     map<string, int> locks;
     map<string, string> facingDescriptions;
 	string exitString();
-    vector <Item> itemsInRoom;
+    vector <Item*> itemsInRoom;
 
 
 public:
@@ -30,19 +30,34 @@ public:
 	string shortDescription();
     string longDescription(string facing);
 	Room* nextRoom(string direction);
-    void addItem(Item *inItem);
+    //void addItem(Item *inItem);
     string displayItem(string facing);
     int isItemInRoom(string inString);
     void removeItemFromRoom(int location);
-    Item takeItem(int location);
+    Item* takeItem(int location);
     string getItemI(int num);
-    Item getItem(int location);
+    Item* getItem(int location);
     bool isADoor(string facing);
     int getLockNum(string facing);
     void setLockNum(string facing);
     void setFacingDescriptions(string north, string east, string south, string west);
     string getFacingDescription(string facing);
     string getName();
+    template<class T>
+    void addItem(T *inItem){
+        itemsInRoom.push_back(inItem);
+
+        for(int i = 0; i< itemsInRoom.size();i++){
+             Item *it = itemsInRoom[i];
+             if(itemsInRoom[i]->getIsKey()==true){
+                Key *ke = (Key*) itemsInRoom[i];
+                cout << "keynum "<< ke->getKeyNum() << endl;
+
+            }
+
+        }
+    }
+
 };
 
 #endif

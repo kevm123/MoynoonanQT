@@ -194,13 +194,13 @@ bool MainWindow::processCommand(Command command) {
         int location = currentRoom->isItemInRoom(command.getSecondWord());
         if (location  < 0 )
             cout << "item is not in room" << endl;
-        else if((currentRoom->getItem(location)).getObtainable() && (character->getFacing() == (currentRoom->getItem(location)).getPlaced())){
+        else if((currentRoom->getItem(location))->getObtainable() && (character->getFacing() == (currentRoom->getItem(location))->getPlaced())){
             cout << "item is in room" << endl;
             cout << "index number " << + location << endl;
             cout << endl;
             cout << currentRoom->longDescription(character->getFacing()) << endl;
 
-            currentRoom->getItem(location).setPlaced("");
+            currentRoom->getItem(location)->setPlaced("");
             character->addItem(currentRoom->takeItem(location));
 
             //Update Obtained Items DropDown
@@ -230,10 +230,10 @@ bool MainWindow::processCommand(Command command) {
         int location = currentRoom->isItemInRoom(command.getSecondWord());
         if (location  < 0 )
             cout << "item is not in room" << endl;
-        else if((character->getFacing() == (currentRoom->getItem(location)).getPlaced()))
+        else if((character->getFacing() == (currentRoom->getItem(location))->getPlaced()))
         {
-            Item ItemToInvestigate = currentRoom->getItem(location);
-            string output = ItemToInvestigate.getInvestigateString();
+            Item *ItemToInvestigate = currentRoom->getItem(location);
+            string output = ItemToInvestigate->getInvestigateString();
              ui->outputLabel->setText(QString::fromStdString(output));
          }
         else

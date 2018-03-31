@@ -59,11 +59,20 @@ Room* Room::nextRoom(string direction) {
 				// part of the "pair" (<string, Room*>) and return it.
 }
 
+/*
+template <class T>
+void Room::addItem(T *inItem)
+{
+    itemsInRoom.push_back(inItem);
+}
+
+
 void Room::addItem(Item *inItem) {
     //cout <<endl;
     //cout << "Just added" + inItem->getLongDescription();
     itemsInRoom.push_back(*inItem);
-}
+
+}*/
 
 string Room::displayItem(string facing) {
     string tempString = "items to the "+facing+" in room = ";
@@ -74,8 +83,8 @@ string Room::displayItem(string facing) {
     else if (itemsInRoom.size() > 0) {
        int x = (0);
         for (int n = sizeItems; n > 0; n--) {
-            if(itemsInRoom[x].getPlaced() == facing)
-                tempString = tempString + itemsInRoom[x].getShortDescription() + "  " ;
+            if(itemsInRoom[x]->getPlaced() == facing)
+                tempString = tempString + itemsInRoom[x]->getShortDescription() + "  " ;
             x++;
             }
         }
@@ -96,7 +105,7 @@ int Room::isItemInRoom(string inString)
        int x = (0);
         for (int n = sizeItems; n > 0; n--) {
             // compare inString with short description
-            int tempFlag = inString.compare( itemsInRoom[x].getShortDescription());
+            int tempFlag = inString.compare( itemsInRoom[x]->getShortDescription());
             if (tempFlag == 0) {
 
                 return x;
@@ -107,30 +116,32 @@ int Room::isItemInRoom(string inString)
     return -1;
 }
 
-Item Room::getItem(int location)
+Item* Room::getItem(int location)
 {
-    Item ItemToCheck = itemsInRoom[location];
+    Item *ItemToCheck = itemsInRoom[location];
     return ItemToCheck;
 }
 
-Item Room::takeItem(int location)
+Item* Room::takeItem(int location)
 {
-    Item takingItem = itemsInRoom[location];
-    if(takingItem.getIsKey()==true){
+    Item *takingItem = itemsInRoom[location];
+    itemsInRoom.erase(itemsInRoom.begin()+location);
+    return takingItem;
+   /* if(takingItem.getIsKey()==true){
         Key takingKey = (Key) itemsInRoom[location];
         itemsInRoom.erase(itemsInRoom.begin()+location);
         return takingKey;
     }else{
         itemsInRoom.erase(itemsInRoom.begin()+location);
         return takingItem;
-    }
+    }*/
 
 
 }
 
 string Room::getItemI(int num)
 {
-    return itemsInRoom[num].getShortDescription();
+    return itemsInRoom[num]->getShortDescription();
 }
 bool Room::isLocked(string facing){
 

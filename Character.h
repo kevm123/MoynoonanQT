@@ -12,11 +12,14 @@ using std::vector;
 class Character {
 private:
     string description;
-    vector < Item > itemsInCharacter;
+    vector < Item* > itemsInCharacter;
     string facing;
 public:
-    void addItem(Item item);
-
+    //void addItem(Item *item);
+    template<class T>
+    void addItem(T *inItem){
+        itemsInCharacter.push_back(inItem);
+    }
 
 
 

@@ -15,6 +15,7 @@ protected:
 
 public:
     Key(string inDescription, int inWeightGrams, float inValue, string inplaced, bool obt, string inString, bool inIsKey, int inKeyNum);
+   // Key(Item* it);
     int getKeyNum();
 };
 
