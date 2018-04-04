@@ -21,6 +21,23 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+//This is a pure virtual function
+class output
+{
+public:
+    virtual string getText() =0;
+};
+
+//Abstract class
+class Controls: public output {
+
+public:
+    string getText(){
+        return("CONTROLS:\n- Use the arrows to face in a direction.\n- You can investigate and take items in the room only when you are facing them.\n- Use keys or other items to open doors when facing them.\n- Use 'Go' to go in the direction your facing through open doors.");
+    }
+
+};
+
 
 
 void MainWindow::createRooms()  {
@@ -99,6 +116,10 @@ void MainWindow::play() {
     character = new Character("This is a new Character");
     fillItems();
     printWelcome();
+
+    Controls c;
+    string controlsText = c.getText();
+    ui->outputLabel->setText(QString::fromStdString(controlsText));
 
 }
 
