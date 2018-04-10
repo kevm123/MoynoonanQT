@@ -4,6 +4,8 @@
 #include "areamap.h"
 #include "finaldoor.h"
 
+
+//Creates a new MainWindow
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -16,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
      play();
 }
 
+//Destructor
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -39,7 +42,7 @@ public:
 };
 
 
-
+//Creates Rooms, references room in Room.cpp
 void MainWindow::createRooms()  {
     Room *a, *b, *c, *d, *e, *f, *g, *h, *i, *j;
 
@@ -113,14 +116,9 @@ void MainWindow::createRooms()  {
  */
 void MainWindow::play() {
 
-    character = new Character("This is a new Character");
+    character = new Character();
     fillItems();
     printWelcome();
-
-    Controls c;
-    string controlsText = c.getText();
-    ui->outputLabel->setText(QString::fromStdString(controlsText));
-
 }
 
 void MainWindow::printWelcome() {
@@ -128,6 +126,11 @@ void MainWindow::printWelcome() {
         showDescription("desc");
         string RoomInfo = currentRoom->longDescription(character->getFacing());
         ui->Label2->setText(QString::fromStdString(RoomInfo));
+
+        //Calls the abstract class
+        Controls c;
+        string controlsText = c.getText();
+        ui->outputLabel->setText(QString::fromStdString(controlsText));
 
 }
 
@@ -137,19 +140,17 @@ void MainWindow::printWelcome() {
  * returned.
  */
 bool MainWindow::processCommand(Command command) {
-    if (command.isUnknown()) {
-        ui->outputLabel->setText(QString::fromStdString("invalid input"));
-        return false;
-    }
 
     string commandWord = command.getCommandWord();
     if(commandWord.compare("go") == 0)
     {
         string facing = character->getFacing();
         goRoom(command, facing);
-        string RoomInfo = currentRoom->longDescription(character->getFacing());
-        ui->Label2->setText(QString::fromStdString(RoomInfo));
-        fillItems();
+
+            string RoomInfo = currentRoom->longDescription(character->getFacing());
+            ui->Label2->setText(QString::fromStdString(RoomInfo));
+            fillItems();
+
     }
 
     else if (commandWord.compare("take") == 0)
@@ -196,6 +197,27 @@ bool MainWindow::processCommand(Command command) {
         else
             ui->outputLabel->setText(QString::fromStdString("You are not facing in the direction of the object"));
     }
+    }
+    else if (commandWord.compare("use")==0)
+    {
+        if(command.hasSecondWord()){
+
+            string itemName = command.getSecondWord();
+            Item *itemToUse = character->getItemByString(itemName);
+
+            bool isAKey= itemToUse->getIsKey();
+            if(isAKey==true){
+                int keyNum = itemToUse->getKeyNum();
+                unlockDoor(keyNum);
+                if(currentRoom->getName() == "g")
+                    ui->outputLabel->setText(QString::fromStdString("This Door cannot be opened with a key.\nIt needs the code to be entered"));
+                else
+                    ui->outputLabel->setText(QString::fromStdString("You have unlocked the door"));
+            }else{
+                ui->outputLabel->setText(QString::fromStdString("You cannot use this item on anything you are facing"));
+            }
+
+        }
     }
 
     return false;
@@ -300,6 +322,14 @@ void MainWindow::on_InvestigateButton_clicked()
     processCommand(*command);
 }
 
+void MainWindow::on_UseButton_clicked()
+{
+    string itemName = (ui->ObtainedItems->currentText()).toStdString();
+    string comm = "use "+itemName;
+    Command* command = parser.getCommand(comm);
+    processCommand(*command);
+}
+
 
 //Update Items In Room DropDown
 void MainWindow::fillItems()
@@ -310,25 +340,6 @@ void MainWindow::fillItems()
         {
             ui->ItemDropdown->addItem(QString::fromStdString(currentRoom->getItemI(i)));
         }
-}
-
-
-void MainWindow::on_UseButton_clicked()
-{
-    string itemName = (ui->ObtainedItems->currentText()).toStdString();
-    Item *itemToUse = character->getItemByString(itemName);
-
-    bool isAKey= itemToUse->getIsKey();
-    if(isAKey==true){
-        int keyNum = itemToUse->getKeyNum();
-        unlockDoor(keyNum);
-        if(currentRoom->getName() == "g")
-            ui->outputLabel->setText(QString::fromStdString("This Door cannot be opened with a key.\nIt needs the code to be entered"));
-        else
-            ui->outputLabel->setText(QString::fromStdString("You have unlocked the door"));
-    }else{
-        ui->outputLabel->setText(QString::fromStdString("You cannot use this item on anything you are facing"));
-    }
 }
 
 void MainWindow::unlockDoor(int keyNum){

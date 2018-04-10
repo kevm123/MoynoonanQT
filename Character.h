@@ -11,7 +11,7 @@ using std::vector;
 
 class Character {
 private:
-    string description;
+
     vector < Item > itemsInCharacter;
     string facing;
 public:
@@ -21,9 +21,7 @@ public:
 
 
 public:
-    Character(string description);
-    string shortDescription();
-    string longDescription();
+    Character();
     int numberOfItems();
     string getItemI(int num);
     Item* getItemByString(string itemName);
