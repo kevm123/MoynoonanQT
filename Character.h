@@ -15,7 +15,7 @@ private:
     vector < Item > itemsInCharacter;
     string facing;
 public:
-    void addItem(Item item);
+    //void addItem(Item item);
 
 
 
@@ -29,6 +29,10 @@ public:
     Item* getItemByString(string itemName);
     string getFacing();
     void setFacing(string direction);
+    template<class T>
+        void addItem(T inItem){
+            itemsInCharacter.push_back(inItem);
+        }
 
 };
 

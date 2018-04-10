@@ -30,7 +30,7 @@ public:
 	string shortDescription();
     string longDescription(string facing);
 	Room* nextRoom(string direction);
-    void addItem(Item *inItem);
+    //void addItem(Item *inItem);
     string displayItem(string facing);
     int isItemInRoom(string inString);
     void removeItemFromRoom(int location);
@@ -43,6 +43,12 @@ public:
     void setFacingDescriptions(string north, string east, string south, string west);
     string getFacingDescription(string facing);
     string getName();
+    template<class T>
+     void addItem(T *inItem){
+            itemsInRoom.push_back(*inItem);
+
+        }
+
 };
 
 #endif

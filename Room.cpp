@@ -61,9 +61,9 @@ Room* Room::nextRoom(string direction) {
 				// part of the "pair" (<string, Room*>) and return it.
 }
 
-void Room::addItem(Item *inItem) {
+/*void Room::addItem(Item *inItem) {
     itemsInRoom.push_back(*inItem);
-}
+}*/
 
 string Room::displayItem(string facing) {
     string tempString = "items to the "+facing+" in room = ";

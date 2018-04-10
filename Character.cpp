@@ -5,9 +5,9 @@ Character::Character(string description) {
     this->description = description;
     facing="north";
 }
-void Character::addItem(Item item) {
+/*void Character::addItem(Item item) {
     itemsInCharacter.push_back(item);
-}
+}*/
 /*void Character::addItem(Item *item) {
     itemsInCharacter.push_back(*item);
     delete item;
