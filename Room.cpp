@@ -21,7 +21,7 @@ void Room::setExits(Room *north, Room *east, Room *south, Room *west) {
 		exits["west"] = west;
 }
 
-void Room::setLocks(int north, int east, int south, int west) {
+void Room::setLocks(double north, double east, double south, double west) {
 
         locks["north"] = north;
 

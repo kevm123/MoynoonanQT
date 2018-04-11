@@ -14,7 +14,7 @@ private:
     string name;
 	string description;
 	map<string, Room*> exits;
-    map<string, int> locks;
+    map<string, double> locks;
     map<string, string> facingDescriptions;
 	string exitString();
     vector <Item> itemsInRoom;
@@ -25,7 +25,7 @@ public:
     Room(string name, string description);
     ~Room();
 	void setExits(Room *north, Room *east, Room *south, Room *west);
-    void setLocks(int north, int east, int south, int west);
+    void setLocks(double north, double east, double south, double west);
     bool isLocked(string facing);
 	string shortDescription();
     string longDescription(string facing);

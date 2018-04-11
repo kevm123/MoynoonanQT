@@ -87,16 +87,16 @@ void MainWindow::createRooms()  {
     j->setExits(NULL,i,NULL,NULL);
 
    //            (N, E, S, W)
-     a->setLocks(0, 5, 0, 4);
-     b->setLocks(7, 0, 0, 0);
-     c->setLocks(6, 0, 0, 0);
-     d->setLocks(0, 0, 0, 0);
-     e->setLocks(0, 0, 0, 0);
-     f->setLocks(0, 0, 0, 0);
-     g->setLocks(0, 0, 0, 1000);
-     h->setLocks(0, 0, 0, 0);
-     i->setLocks(0, 2, 0, 0);
-     j->setLocks(0, 1, 0, 0);
+     a->setLocks(0.0, 5.0, 0.0, 4.0);
+     b->setLocks(7.0, 0.0, 0.0, 0.0);
+     c->setLocks(6.0, 0.0, 0.0, 0.0);
+     d->setLocks(0.0, 0.0, 0.0, 0.0);
+     e->setLocks(0.0, 0.0, 0.0, 0.0);
+     f->setLocks(0.0, 0.0, 0.0, 0.0);
+     g->setLocks(0.0, 0.0, 0.0, 1000.0);
+     h->setLocks(0.0, 0.0, 0.0, 0.0);
+     i->setLocks(0.0, 2.0, 0.0, 0.0);
+     j->setLocks(0.0, 1.0, 0.0, 0.0);
 
      a->setFacingDescriptions("There is nothing but a large brick wall", "A large blue door stands in front of you", "An open door leading to a hall with a skylight", "A red door is in front of you");
      b->setFacingDescriptions("A large door with a trail of blood, the blood still seems wet.", "Chains line the walls and theres claw marks on the floor, an unusual looking key is on the chains", "Sleeping bags and old mattress's are scattered on the floor", "A blue door is open");
@@ -208,11 +208,12 @@ bool MainWindow::processCommand(Command command) {
             bool isAKey= itemToUse->getIsKey();
             if(isAKey==true){
                 int keyNum = itemToUse->getKeyNum();
-                unlockDoor(keyNum);
                 if(currentRoom->getName() == "g")
                     ui->outputLabel->setText(QString::fromStdString("This Door cannot be opened with a key.\nIt needs the code to be entered"));
-                else
+                else{
+                    unlockDoor(keyNum);
                     ui->outputLabel->setText(QString::fromStdString("You have unlocked the door"));
+                }
             }else{
                 ui->outputLabel->setText(QString::fromStdString("You cannot use this item on anything you are facing"));
             }
@@ -349,7 +350,7 @@ void MainWindow::unlockDoor(int keyNum){
 
         if(keyNum == currentRoom->getLockNum(facing)){
             ui->Label1->setText("Key Worked, Door unlocked!");
-             currentRoom->setLockNum(facing);
+             currentRoom->setLockNum(facing);          
         }else{
             ui->Label1->setText("Wrong key for this lock");
         }
